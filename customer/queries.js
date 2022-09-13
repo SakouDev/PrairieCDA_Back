@@ -5,7 +5,6 @@ const addCustomer = "INSERT INTO customer (firstname, lastname, address, mail) V
 const updateCustomer = "UPDATE customer SET firstname = $1 WHERE id = $2"
 const deleteCustomer = "DELETE FROM customer WHERE id = $1"
 
-
 module.exports = {
     getCustomer,
     getCustomerById,

@@ -2,7 +2,6 @@ const { response } = require("express")
 const db = require("../database/connect-local")
 const queries = require("./queries")
 
-
 const getAnimal = (req, res) => {
     db.query(queries.getAnimal, (error, result) => {
         if(error) throw error
@@ -36,7 +35,6 @@ const updateAnimal = (req, res) => {
         if(noanimalFound){
             res.send("Not Found. Can't update. U dumb")
         }
-
         db.query(queries.updateAnimal, [firstname , id], (error, result) => {
             if (error) throw error
             res.status(200).send("Updated ! (Faster than LostArk Update !)")

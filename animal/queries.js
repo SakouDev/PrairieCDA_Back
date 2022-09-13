@@ -3,10 +3,7 @@ const getAnimalById = "SELECT * FROM animal WHERE id = $1"
 const addAnimal = "INSERT INTO animal (customerid, name, race, dead) VALUES ($1, $2, $3, $4)"
 const updateAnimal = "UPDATE animal SET firstname = $1 WHERE id = $2"
 const deleteAnimal = "DELETE FROM animal WHERE id = $1"
-
-
 const getCustomerAnimal = 'SELECT * FROM animal WHERE customerid = $1'
-
 
 module.exports = {
     getAnimal,

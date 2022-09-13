@@ -2,7 +2,6 @@ const { response } = require("express")
 const db = require("../database/connect-local")
 const queries = require("./queries")
 
-
 const getCustomer = (req, res) => {
     db.query(queries.getCustomer, (error, result) => {
         if(error) throw error
@@ -20,18 +19,18 @@ const getCustomerById = (req, res) => {
 
 const addCustomer = (req, res) => {
     const { firstname, lastname, address, mail } = req.body
-
     //Check mail
     db.query(queries.checkMailExists, [mail], (error, result) => {
         if(result.rows.length){
             res.send("Mail already exist.")
+        }else{
+            // Add
+            db.query(queries.addCustomer, [firstname, lastname, address, mail], (error, result) => {
+                if(error) throw error
+                res.status(200).send("Created Succesfully!")
+            })
         }
-    })
-    //Add
-    db.query(queries.addCustomer, [firstname, lastname, address, mail], (error, result) => {
-        if(error) throw error
-        res.status(200).send("Created Succesfully!")
-    })
+    }) 
 }
 
 const updateCustomer = (req, res) => {
@@ -43,7 +42,6 @@ const updateCustomer = (req, res) => {
         if(noCustomerFound){
             res.send("Not Found. Can't update. U dumb")
         }
-
         db.query(queries.updateCustomer, [firstname , id], (error, result) => {
             if (error) throw error
             res.status(200).send("Updated ! (Faster than LostArk Update !)")

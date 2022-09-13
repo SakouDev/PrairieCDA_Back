@@ -1,12 +1,11 @@
 const cors = require('cors')
 const express = require("express")
-const customerRoutes = require("./routes")
-
 const app = express()
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 
+const customerRoutes = require("./routes")
+
+app.use(express.json())
 
 const port = process.env.PORT || 5000
 app.listen(port, () => {
