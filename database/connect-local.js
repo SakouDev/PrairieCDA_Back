@@ -4,8 +4,8 @@ const db = new DB({
     host: "localhost",
     user: "postgres",
     port: 5432,
-    password: "b87ce6a6a1e",
-    database: "postgres"
+    password: "12344",
+    database: "prairiewafmiaou"
 })
 
 module.exports = db

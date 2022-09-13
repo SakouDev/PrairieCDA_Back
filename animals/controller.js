@@ -44,16 +44,16 @@ const updateAnimal = (req, res) => {
 
 const deleteAnimal = (req , res) => {
     const id = parseInt(req.params.id)
-    //Get animal
+    //Get animals
     db.query(queries.getAnimalById, [id], (error, result) => {
         const noanimalFound = !result.rows.length
         if(noanimalFound){
-            res.send("animal not found, Couldn't remove.")
+            res.send("animals not found, Couldn't remove.")
         }
-        // Delete the animal
+        // Delete the animals
         db.query(queries.deleteAnimal, [id], (error, result) =>{
             if (error) throw error
-            res.status(200).send("animal Deleted.. CHEH!")
+            res.status(200).send("animals Deleted.. CHEH!")
         })
     })
 }

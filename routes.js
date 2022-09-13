@@ -1,26 +1,26 @@
 const { Router } = require("express")
-const controllerCustomer = require("./customer/controller")
-const controllerAnimal = require("./animal/controller")
+const controllerCustomer = require("./customers/controller")
+const controllerAnimal = require("./animals/controller")
 
 
 const router = Router();
 
 //Customer:
-router.get('/customer', controllerCustomer.getCustomer)
-router.get('/customer/:id', controllerCustomer.getCustomerById)
-router.post('/customer', controllerCustomer.addCustomer)
-router.put('/customer/:id', controllerCustomer.updateCustomer)
-router.delete('/customer/:id', controllerCustomer.deleteCustomer)
+router.get('/customers', controllerCustomer.getCustomer)
+router.get('/customers/:id', controllerCustomer.getCustomerById)
+router.post('/customers', controllerCustomer.addCustomer)
+router.put('/customers/:id', controllerCustomer.updateCustomer)
+router.delete('/customers/:id', controllerCustomer.deleteCustomer)
 
-//animal
-router.get('/animal', controllerAnimal.getAnimal)
-router.get('/animal/:id', controllerAnimal.getAnimalById)
-router.post('/animal', controllerAnimal.addAnimal)
-router.put('/animal/:id', controllerAnimal.updateAnimal)
-router.delete('/animal/:id', controllerAnimal.deleteAnimal)
+//animals
+router.get('/animals', controllerAnimal.getAnimal)
+router.get('/animals/:id', controllerAnimal.getAnimalById)
+router.post('/animals', controllerAnimal.addAnimal)
+router.put('/animals/:id', controllerAnimal.updateAnimal)
+router.delete('/animals/:id', controllerAnimal.deleteAnimal)
 
 
-router.get('/customer/:id/animal', controllerAnimal.getCustomerAnimal)
+router.get('/customers/:id/animals', controllerAnimal.getCustomerAnimal)
 
 
 module.exports = router
