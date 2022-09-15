@@ -1,23 +1,23 @@
 const { response } = require("express")
 const db = require("../database/connect-local")
-const queries = require("./queries")
+const queries = require("../queries/customerQueries")
 
-const getCustomer = (req, res) => {
-    db.query(queries.getCustomer, (error, result) => {
+const getCustomers = (req, res) => {
+    db.query(queries.getCustomers, (error, result) => {
         if(error) throw error
         res.status(200).json(result.rows)
     })
 }
 
-const getCustomerById = (req, res) => {
+const getCustomersById = (req, res) => {
     const id = parseInt(req.params.id)
-    db.query(queries.getCustomerById, [id], (error, result) => {
+    db.query(queries.getCustomersById, [id], (error, result) => {
         if(error) throw error
         res.status(200).json(result.rows)
     })
 }
 
-const addCustomer = (req, res) => {
+const addCustomers = (req, res) => {
     const { firstname, lastname, address, mail } = req.body
     //Check mail
     db.query(queries.checkMailExists, [mail], (error, result) => {
@@ -25,7 +25,7 @@ const addCustomer = (req, res) => {
             res.send("Mail already exist.")
         }else{
             // Add
-            db.query(queries.addCustomer, [firstname, lastname, address, mail], (error, result) => {
+            db.query(queries.addCustomers, [firstname, lastname, address, mail], (error, result) => {
                 if(error) throw error
                 res.status(200).send("Created Succesfully!")
             })
@@ -33,42 +33,54 @@ const addCustomer = (req, res) => {
     }) 
 }
 
-const updateCustomer = (req, res) => {
+const updateCustomers = (req, res) => {
     const id = parseInt(req.params.id)
     const { firstname } = req.body
 
-    db.query(queries.getCustomerById, [id], (error, result) => {
+    db.query(queries.getCustomersById, [id], (error, result) => {
         const noCustomerFound = !result.rows.length
         if(noCustomerFound){
             res.send("Not Found. Can't update. U dumb")
         }
-        db.query(queries.updateCustomer, [firstname , id], (error, result) => {
+        db.query(queries.updateCustomers, [firstname , id], (error, result) => {
             if (error) throw error
             res.status(200).send("Updated ! (Faster than LostArk Update !)")
         })
     })
 }
 
-const deleteCustomer = (req , res) => {
+const deleteCustomers = (req , res) => {
     const id = parseInt(req.params.id)
     //Get Customer
-    db.query(queries.getCustomerById, [id], (error, result) => {
+    db.query(queries.getCustomersById, [id], (error, result) => {
         const noCustomerFound = !result.rows.length
         if(noCustomerFound){
             res.send("Customer not found, Couldn't remove.")
+        }else{
+            db.query(queries.deleteCustomers, [id], (error, result) =>{
+                if (error) throw error
+                res.status(200).send("Customer Deleted.. CHEH!")
+            })
         }
         // Delete the Customer
-        db.query(queries.deleteCustomer, [id], (error, result) =>{
-            if (error) throw error
-            res.status(200).send("Customer Deleted.. CHEH!")
-        })
+        
+    })
+}
+
+const getCustomerAnimal = (req, res) => {
+    const id = parseInt(req.params.id)
+
+    db.query(queries.getCustomerAnimal, [id], (error, result) => {
+        if(error) throw error
+        res.status(200).json(result.rows)
     })
 }
 
 module.exports = {
-    getCustomer,
-    getCustomerById,
-    addCustomer,
-    updateCustomer,
-    deleteCustomer
+    getCustomers,
+    getCustomersById,
+    addCustomers,
+    updateCustomers,
+    deleteCustomers,
+    getCustomerAnimal
 }
